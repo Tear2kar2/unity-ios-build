@@ -20,16 +20,28 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      # Tải bổ sung IL2CPP binary cho macOS
-      - name: Fix Missing macOS IL2CPP Binaries
+      - name: Install Unity iOS Playback Engine (macOS)
         run: |
-          echo "Kiểm tra và cấp quyền thực thi cho các script trong project..."
-          find . -name "*.sh" -exec chmod +x {} +
+          echo "Tải bộ Unity iOS Support cho macOS..."
+          # Tải package iOS PlaybackEngine chính thức từ server Unity (phiên bản 2022.3.62f3)
+          curl -sSL "https://download.unity3d.com/download_unity/cb082e6ef26e/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.62f3.pkg" -o /tmp/unity-ios.pkg
           
-          # Cấp quyền thực thi nếu các file binary đã tồn tại
-          if [ -d "Il2CppOutputProject/IL2CPP" ]; then
-            find Il2CppOutputProject/IL2CPP -type f -perm +111 -exec chmod +x {} + 2>/dev/null || true
+          # Bung package ra thư mục tạm
+          pkgutil --expand-full /tmp/unity-ios.pkg /tmp/unity-ios-expanded
+          
+          # Tìm đúng thư mục IL2CPP cho macOS
+          IL2CPP_DIR=$(find /tmp/unity-ios-expanded -type d -path "*/PlaybackEngines/iOSSupport/il2cpp" | head -n 1)
+          
+          if [ -d "$IL2CPP_DIR" ]; then
+            echo "Đã tìm thấy IL2CPP macOS: $IL2CPP_DIR"
+            mkdir -p Il2CppOutputProject/IL2CPP/build/deploy_arm64
+            cp -rf "$IL2CPP_DIR"/build/deploy_arm64/* Il2CppOutputProject/IL2CPP/build/deploy_arm64/ 2>/dev/null || true
+            cp -rf "$IL2CPP_DIR"/* Il2CppOutputProject/IL2CPP/ 2>/dev/null || true
           fi
+          
+          # Cấp toàn bộ quyền thực thi cho các file nhị phân IL2CPP
+          find Il2CppOutputProject/IL2CPP -type f -exec chmod +x {} + 2>/dev/null || true
+          find . -name "*.sh" -exec chmod +x {} + 2>/dev/null || true
 
       - name: Build App
         run: |
@@ -52,7 +64,7 @@ jobs:
             APP_PATH=$(find build -name "*.app" -type d 2>/dev/null | head -n 1)
           fi
           
-          echo "Found app at: $APP_PATH"
+          echo "App path found: $APP_PATH"
           cp -r "$APP_PATH" Payload/
           zip -r Unity-iPhone.ipa Payload
 
