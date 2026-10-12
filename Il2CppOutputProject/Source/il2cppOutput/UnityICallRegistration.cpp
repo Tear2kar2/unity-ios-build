@@ -62,6 +62,10 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Application_get_targetFrameRate();
 		Register_UnityEngine_Application_get_targetFrameRate();
 
+		//System.String UnityEngine.Application::get_persistentDataPath()
+		void Register_UnityEngine_Application_get_persistentDataPath();
+		Register_UnityEngine_Application_get_persistentDataPath();
+
 		//System.Void UnityEngine.Application::OpenURL(System.String)
 		void Register_UnityEngine_Application_OpenURL();
 		Register_UnityEngine_Application_OpenURL();
@@ -756,6 +760,14 @@ void RegisterAllStrippedInternalCalls()
 
 	//End Registrations for type : UnityEngine.Internal.InputUnsafeUtility
 
+	//Start Registrations for type : UnityEngine.iOS.Device
+
+		//System.Void UnityEngine.iOS.Device::SetNoBackupFlag(System.String)
+		void Register_UnityEngine_iOS_Device_SetNoBackupFlag();
+		Register_UnityEngine_iOS_Device_SetNoBackupFlag();
+
+	//End Registrations for type : UnityEngine.iOS.Device
+
 	//Start Registrations for type : UnityEngine.Light
 
 		//System.Boolean UnityEngine.Light::get_useColorTemperature()
@@ -1101,6 +1113,10 @@ void RegisterAllStrippedInternalCalls()
 	//End Registrations for type : UnityEngine.PlayerConnectionInternal
 
 	//Start Registrations for type : UnityEngine.PlayerPrefs
+
+		//System.Boolean UnityEngine.PlayerPrefs::HasKey(System.String)
+		void Register_UnityEngine_PlayerPrefs_HasKey();
+		Register_UnityEngine_PlayerPrefs_HasKey();
 
 		//System.Boolean UnityEngine.PlayerPrefs::TrySetSetString(System.String,System.String)
 		void Register_UnityEngine_PlayerPrefs_TrySetSetString();

@@ -252,6 +252,7 @@
 		83B2570A0E62FF8A00468741 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		83B2574B0E63022200468741 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		848031E01C5160D700FCEAB7 /* UnityReplayKit_Scripting.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnityReplayKit_Scripting.mm; sourceTree = "<group>"; };
+		848BF6A7383F7523CFD9F1F2 /* Generics__13.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Generics__13.cpp; path = Il2CppOutputProject/Source/il2cppOutput/Generics__13.cpp; sourceTree = SOURCE_ROOT; };
 		84DC28F51C5137FE00BC67D7 /* UnityReplayKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnityReplayKit.mm; sourceTree = "<group>"; };
 		84DC28F71C51383500BC67D7 /* UnityReplayKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnityReplayKit.h; sourceTree = "<group>"; };
 		85E5623620F4F4D1001DFEF6 /* UnityView+Keyboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UnityView+Keyboard.mm"; sourceTree = "<group>"; };
@@ -393,6 +394,7 @@
 		DCC618ACC1C885764FCFF788 /* mscorlib__19.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mscorlib__19.cpp; path = Il2CppOutputProject/Source/il2cppOutput/mscorlib__19.cpp; sourceTree = SOURCE_ROOT; };
 		DCFF8C91896C4981029286E5 /* System.Core_CodeGen.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = System.Core_CodeGen.c; path = Il2CppOutputProject/Source/il2cppOutput/System.Core_CodeGen.c; sourceTree = SOURCE_ROOT; };
 		DD952DDCAB0485953E3CE902 /* Il2CppCCFieldValuesTable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Il2CppCCFieldValuesTable.cpp; path = Il2CppOutputProject/Source/il2cppOutput/Il2CppCCFieldValuesTable.cpp; sourceTree = SOURCE_ROOT; };
+		DDB2F8BB5DC4E5D804C3C134 /* Il2CppCCalculateFieldValues1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Il2CppCCalculateFieldValues1.cpp; path = Il2CppOutputProject/Source/il2cppOutput/Il2CppCCalculateFieldValues1.cpp; sourceTree = SOURCE_ROOT; };
 		DE35E560F61A1FC277AE3BDA /* Assembly-CSharp__12.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Assembly-CSharp__12.cpp"; path = "Il2CppOutputProject/Source/il2cppOutput/Assembly-CSharp__12.cpp"; sourceTree = SOURCE_ROOT; };
 		E0994B957EB074EB69BD9ABA /* Assembly-CSharp__6.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Assembly-CSharp__6.cpp"; path = "Il2CppOutputProject/Source/il2cppOutput/Assembly-CSharp__6.cpp"; sourceTree = SOURCE_ROOT; };
 		E63E22A2D76ACB6254C3A017 /* mscorlib__13.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mscorlib__13.cpp; path = Il2CppOutputProject/Source/il2cppOutput/mscorlib__13.cpp; sourceTree = SOURCE_ROOT; };
@@ -593,6 +595,7 @@
 				11856605578FD8270FB7624A /* Generics__10.cpp */,
 				317B44F3876EC140C859BDEB /* Generics__11.cpp */,
 				BF026C43C97DF354A316F9F4 /* Generics__12.cpp */,
+				848BF6A7383F7523CFD9F1F2 /* Generics__13.cpp */,
 				C74C563E02CE38C5DC9590E7 /* Generics__2.cpp */,
 				F6CDB022FB8DC8CFB499BE10 /* Generics__3.cpp */,
 				FAFE6F25F97E0825A99B77C2 /* Generics__4.cpp */,
@@ -604,6 +607,7 @@
 				DD952DDCAB0485953E3CE902 /* Il2CppCCFieldValuesTable.cpp */,
 				CA2FE0E937B9F3EBF23597D5 /* Il2CppCCTypeValuesTable.cpp */,
 				B662E7588FD9F79EDCF63D17 /* Il2CppCCalculateFieldValues.cpp */,
+				DDB2F8BB5DC4E5D804C3C134 /* Il2CppCCalculateFieldValues1.cpp */,
 				1EF6732A52CD49B602825AEB /* Il2CppCCalculateTypeValues.cpp */,
 				67B80E918530D8754535F3F9 /* Il2CppCodeRegistration.cpp */,
 				AE25855F1DB729A61745C8CB /* Il2CppGenericAdjustorThunkTable.c */,

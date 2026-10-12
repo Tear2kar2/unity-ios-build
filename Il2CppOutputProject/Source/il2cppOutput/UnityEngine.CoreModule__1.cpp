@@ -690,6 +690,9 @@ struct Binder_t91BFCE95A7057FADF4D8A1A342AFE52872246235  : public RuntimeObject
 struct BuiltinRuntimeReflectionSystem_tB099BEB081659A8BC623562DA25A5F863846EEAE  : public RuntimeObject
 {
 };
+struct Device_tE64867BD7FD7FA2D4A5FC2E8DD615AE8C00CF8CD  : public RuntimeObject
+{
+};
 struct GraphicsFormatUtility_t3DAD8CAC84EA38F28613F98184F871773CB282FD  : public RuntimeObject
 {
 };
@@ -12390,6 +12393,22 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool U3CU3Ec__DisplayClass8_0_U3CUnregisterMa
 		L_3 = Guid_op_Equality_mAD728A1A4FB970715E84B7D346E094FE5EF2A240(L_1, L_2, NULL);
 		return L_3;
 	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Device_SetNoBackupFlag_mB3CA5D8D1599B7507FA171A824EC035E90042F46 (String_t* ___0_path, const RuntimeMethod* method) 
+{
+	typedef void (*Device_SetNoBackupFlag_mB3CA5D8D1599B7507FA171A824EC035E90042F46_ftn) (String_t*);
+	static Device_SetNoBackupFlag_mB3CA5D8D1599B7507FA171A824EC035E90042F46_ftn _il2cpp_icall_func;
+	if (!_il2cpp_icall_func)
+	_il2cpp_icall_func = (Device_SetNoBackupFlag_mB3CA5D8D1599B7507FA171A824EC035E90042F46_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.iOS.Device::SetNoBackupFlag(System.String)");
+	_il2cpp_icall_func(___0_path);
 }
 #ifdef __clang__
 #pragma clang diagnostic pop

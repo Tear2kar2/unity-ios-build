@@ -246,6 +246,8 @@ struct MissingFieldException_t251FB3C0B4F3D0C490A9A36B5BF2A1EF1A3D389C;
 struct MissingMemberException_tB9D7B25FF06EEBB52D036DA8B1BE67F67619D211;
 struct MissingMethodException_t3D861B41F6520C32A7994A884343802925703155;
 struct Module_tABB9217F7F2BA3E0F4277D03C2B234A7313BB8D0;
+struct MonoLimitationAttribute_t0671BB133022A056F2EC4455E192879F69ABEE3B;
+struct MonoTODOAttribute_t4ADEF905CF6BAC412479036B495F2C48B1CEE76D;
 struct MonoTypeInfo_t90D5999A69AC524474FDEAC50F55B6CE868AB501;
 struct NotImplementedException_t6366FE4DCF15094C51F4833B91A2AE68D4DA90E8;
 struct NotSupportedException_t1429765983D409BD2986508963C98D214E4EBF4A;
@@ -858,6 +860,9 @@ struct List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D  : public RuntimeObject
 struct Activator_tB31D4E2D282C5AA90D61D6EB0A297A5D3D41DA24  : public RuntimeObject
 {
 };
+struct AppContextSwitches_t542F10E9BE2333B7BE24C8858C8A24EFA6C06D38  : public RuntimeObject
+{
+};
 struct Assembly_t  : public RuntimeObject
 {
 };
@@ -1368,6 +1373,10 @@ struct IntPtr_t
 struct MethodBase_t  : public MemberInfo_t
 {
 };
+struct MonoTODOAttribute_t4ADEF905CF6BAC412479036B495F2C48B1CEE76D  : public Attribute_tFDA8EFEFB0711976D22474794576DAF28F7440AA
+{
+	String_t* ___comment;
+};
 struct ParameterModifier_t75F1AF13B2AD5EDBD3A3579FD337D0A66E3FF510 
 {
 	BooleanU5BU5D_tD317D27C31DB892BE79FAE3AEBC0B3FFB73DE9B4* ____byRef;
@@ -1578,6 +1587,9 @@ struct MemberTypes_t26BAB0893BEC9328F2F64E8BACDA967C445632E5
 	int32_t ___value__;
 };
 struct MethodInfo_t  : public MethodBase_t
+{
+};
+struct MonoLimitationAttribute_t0671BB133022A056F2EC4455E192879F69ABEE3B  : public MonoTODOAttribute_t4ADEF905CF6BAC412479036B495F2C48B1CEE76D
 {
 };
 struct PInfo_t8E650D58C9259127E18C225459323E41106C2877 
@@ -2083,6 +2095,12 @@ struct List_1_tAA22D565EFA8D6D98AB10DE37D44553FDE22DBFB_StaticFields
 struct List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D_StaticFields
 {
 	ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* ___s_emptyArray;
+};
+struct AppContextSwitches_t542F10E9BE2333B7BE24C8858C8A24EFA6C06D38_StaticFields
+{
+	bool ___EnforceJapaneseEraYearRanges;
+	bool ___FormatJapaneseFirstYearAsANumber;
+	bool ___EnforceLegacyJapaneseDateParsing;
 };
 struct CompatibilitySwitches_tB79DCB09D4C68F2E102E6AB6803805CC96BD73D9_StaticFields
 {
@@ -3264,7 +3282,11 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Int32U5BU5D_t19C97395396A72ECAF310612F0760F16
 IL2CPP_EXTERN_C IL2CPP_NO_INLINE IL2CPP_METHOD_ATTR void List_1_AddWithResize_m79A9BF770BEF9C06BE40D5401E55E375F2726CC4_gshared (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, RuntimeObject* ___0_item, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_NO_INLINE IL2CPP_METHOD_ATTR void List_1_AddWithResize_m378B392086AAB6F400944FA9839516326B3F7BB8_gshared (List_1_t05915E9237850A58106982B7FE4BC5DA4E872E73* __this, int32_t ___0_item, const RuntimeMethod* method) ;
 
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Attribute__ctor_m79ED1BF1EE36D1E417BA89A0D9F91F8AAD8D19E2 (Attribute_tFDA8EFEFB0711976D22474794576DAF28F7440AA* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MonoTODOAttribute__ctor_m2FD4612EF82968FFE90EB0498C9F645A3054B54A (MonoTODOAttribute_t4ADEF905CF6BAC412479036B495F2C48B1CEE76D* __this, String_t* ___0_comment, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2 (RuntimeObject* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Object_Finalize_mC98C96301CCABFE00F1A7EF8E15DF507CACD42B2 (RuntimeObject* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void LocalDataStore_Dispose_m7A115A947B41793E266ADD3045547AAE3AE5E8A5 (LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* __this, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void LocalDataStoreMgr_DeleteLocalDataStore_mD08DFC635EC33DACB370178201F7DF54FF28B565 (LocalDataStoreMgr_t205F1783D5CC2B148E829B5882E5406FF9A3AC1E* __this, LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* ___0_store, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void LocalDataStoreMgr_ValidateSlot_m077C6BE811E06CD84396D8D3FE442753B7A661A0 (LocalDataStoreMgr_t205F1783D5CC2B148E829B5882E5406FF9A3AC1E* __this, LocalDataStoreSlot_tEE8D2C2A87B7336B3C04BFCF3963F1307EAA2499* ___0_slot, const RuntimeMethod* method) ;
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t LocalDataStoreSlot_get_Slot_m1F426571015D0EEC027394DDC55881331B6160A8_inline (LocalDataStoreSlot_tEE8D2C2A87B7336B3C04BFCF3963F1307EAA2499* __this, const RuntimeMethod* method) ;
@@ -3281,7 +3303,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Monitor_Enter_m3CDB589DA1300B513D55FDCFB
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t LocalDataStoreMgr_GetSlotTableLength_m17D1A0EE411E3C18515D80F796491AE2FA34F46A (LocalDataStoreMgr_t205F1783D5CC2B148E829B5882E5406FF9A3AC1E* __this, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Array_Copy_m4233828B4E6288B6D815F539AAA38575DE627900 (RuntimeArray* ___0_sourceArray, RuntimeArray* ___1_destinationArray, int32_t ___2_length, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void LocalDataStoreElement__ctor_m59A48056CF4FCF72B2272C82AE9E077CA559DD05 (LocalDataStoreElement_tB189C937CAD74ED44C7644663CEDA7B2EDDDB46B* __this, int64_t ___0_cookie, const RuntimeMethod* method) ;
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Object_Finalize_mC98C96301CCABFE00F1A7EF8E15DF507CACD42B2 (RuntimeObject* __this, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void LocalDataStoreMgr_FreeDataSlot_mF59A1C7C07F032738A40BCE7FEA4E29A59F4217A (LocalDataStoreMgr_t205F1783D5CC2B148E829B5882E5406FF9A3AC1E* __this, int32_t ___0_slot, int64_t ___1_cookie, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void LocalDataStore__ctor_mF0B68949E727A1D6B00C8E764B2984A0113195FC (LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* __this, LocalDataStoreMgr_t205F1783D5CC2B148E829B5882E5406FF9A3AC1E* ___0_mgr, int32_t ___1_InitialCapacity, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void LocalDataStoreHolder__ctor_m6DDA0A49BAD850F697AC0C295F4CB8F9298F2912 (LocalDataStoreHolder_t789DD474AE5141213C2105CE57830ECFC2D3C03F* __this, LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* ___0_store, const RuntimeMethod* method) ;
@@ -3374,7 +3395,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Buffer_memcpy2_m9C9B0B08B9FE366BE13C4857
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Buffer_memcpy4_m2003EA216B7F3A174D6724F06E64E3D7F55A5CF4 (uint8_t* ___0_dest, uint8_t* ___1_src, int32_t ___2_size, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void RuntimeImports_Memmove_mB3E90ADCBBB4053F9E03DA324E8AC50BB33ABA38 (uint8_t* ___0_dest, uint8_t* ___1_src, uint32_t ___2_len, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MarshalByRefObject__ctor_mCBAD191F9BB35587528256781970FDFEFCDBE538 (MarshalByRefObject_t8C2F4C5854177FD60439EB1FCCFC1B3CFAFE8DCE* __this, const RuntimeMethod* method) ;
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Attribute__ctor_m79ED1BF1EE36D1E417BA89A0D9F91F8AAD8D19E2 (Attribute_tFDA8EFEFB0711976D22474794576DAF28F7440AA* __this, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* Array_Clone_m66C9D0727C9BAA0995E4142F29B45BC03582E042 (RuntimeArray* __this, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool DefaultBinder_CreateParamOrder_m21858BA82DE5B7E5D9DBEF23862F6DDBF561A3C3 (Int32U5BU5D_t19C97395396A72ECAF310612F0760F165060314C* ___0_paramOrder, ParameterInfoU5BU5D_t86995AB4A1693393FE29B058CC3FD727DF0B984C* ___1_pars, StringU5BU5D_t7674CD946EC0CE7B3AE0BE70E6EE85F2ECD9F248* ___2_names, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool MethodBase_op_Equality_mB075E658C5D8860D1707CFF2D430D05284FD2EAD (MethodBase_t* ___0_left, MethodBase_t* ___1_right, const RuntimeMethod* method) ;
@@ -3935,6 +3955,127 @@ inline void List_1_AddWithResize_m378B392086AAB6F400944FA9839516326B3F7BB8 (List
 {
 	((  void (*) (List_1_t05915E9237850A58106982B7FE4BC5DA4E872E73*, int32_t, const RuntimeMethod*))List_1_AddWithResize_m378B392086AAB6F400944FA9839516326B3F7BB8_gshared)(__this, ___0_item, method);
 }
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MonoTODOAttribute__ctor_mA19C7B91FDA691044FED247B4EB41C2EF5C08A54 (MonoTODOAttribute_t4ADEF905CF6BAC412479036B495F2C48B1CEE76D* __this, const RuntimeMethod* method) 
+{
+	{
+		Attribute__ctor_m79ED1BF1EE36D1E417BA89A0D9F91F8AAD8D19E2(__this, NULL);
+		return;
+	}
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MonoTODOAttribute__ctor_m2FD4612EF82968FFE90EB0498C9F645A3054B54A (MonoTODOAttribute_t4ADEF905CF6BAC412479036B495F2C48B1CEE76D* __this, String_t* ___0_comment, const RuntimeMethod* method) 
+{
+	{
+		Attribute__ctor_m79ED1BF1EE36D1E417BA89A0D9F91F8AAD8D19E2(__this, NULL);
+		String_t* L_0 = ___0_comment;
+		__this->___comment = L_0;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___comment), (void*)L_0);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MonoLimitationAttribute__ctor_mD05F3A3F9331044852482010EAE5C6612D283D4D (MonoLimitationAttribute_t0671BB133022A056F2EC4455E192879F69ABEE3B* __this, String_t* ___0_comment, const RuntimeMethod* method) 
+{
+	{
+		String_t* L_0 = ___0_comment;
+		MonoTODOAttribute__ctor_m2FD4612EF82968FFE90EB0498C9F645A3054B54A(__this, L_0, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void LocalDataStoreHolder__ctor_m6DDA0A49BAD850F697AC0C295F4CB8F9298F2912 (LocalDataStoreHolder_t789DD474AE5141213C2105CE57830ECFC2D3C03F* __this, LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* ___0_store, const RuntimeMethod* method) 
+{
+	{
+		Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2(__this, NULL);
+		LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* L_0 = ___0_store;
+		__this->___m_Store = L_0;
+		Il2CppCodeGenWriteBarrier((void**)(&__this->___m_Store), (void*)L_0);
+		return;
+	}
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void LocalDataStoreHolder_Finalize_m6B1FB80238DF28D133162852B6108C0E04994614 (LocalDataStoreHolder_t789DD474AE5141213C2105CE57830ECFC2D3C03F* __this, const RuntimeMethod* method) 
+{
+	LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* V_0 = NULL;
+	{
+		auto __finallyBlock = il2cpp::utils::Finally([&]
+		{
+
+FINALLY_0014:
+			{
+				Object_Finalize_mC98C96301CCABFE00F1A7EF8E15DF507CACD42B2(__this, NULL);
+				return;
+			}
+		});
+		try
+		{
+			{
+				LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* L_0 = __this->___m_Store;
+				V_0 = L_0;
+				LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* L_1 = V_0;
+				if (L_1)
+				{
+					goto IL_000c_1;
+				}
+			}
+			{
+				goto IL_001b;
+			}
+
+IL_000c_1:
+			{
+				LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* L_2 = V_0;
+				NullCheck(L_2);
+				LocalDataStore_Dispose_m7A115A947B41793E266ADD3045547AAE3AE5E8A5(L_2, NULL);
+				goto IL_001b;
+			}
+		}
+		catch(Il2CppExceptionWrapper& e)
+		{
+			__finallyBlock.StoreException(e.ex);
+		}
+	}
+
+IL_001b:
+	{
+		return;
+	}
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* LocalDataStoreHolder_get_Store_mBD1424E2BA95DF87EF55AD55AF18971D539CE6B3 (LocalDataStoreHolder_t789DD474AE5141213C2105CE57830ECFC2D3C03F* __this, const RuntimeMethod* method) 
+{
+	{
+		LocalDataStore_tFCE524A076B3FEBC2C1D1F7E49370896FF0788CA* L_0 = __this->___m_Store;
+		return L_0;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
