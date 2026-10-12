@@ -20,34 +20,36 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Install Unity iOS Support (macOS binaries)
+      - name: Extract macOS IL2CPP Binaries
         run: |
-          echo "Tải bộ Unity iOS Support chuẩn cho Unity 2022.3.62f3..."
+          echo "Tải bộ Unity iOS Support..."
           curl -L -f "https://download.unity3d.com/download_unity/96770f904ca7/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.62f3.pkg" -o /tmp/unity-ios.pkg
-          
-          echo "Cài đặt pkg vào máy ảo..."
-          sudo installer -pkg /tmp/unity-ios.pkg -target /
-          
-          echo "Tìm thư mục IL2CPP vừa cài đặt..."
-          IL2CPP_DIR=$(find /Applications /opt /Library -type d -path "*/iOSSupport/il2cpp" 2>/dev/null | head -n 1)
-          
-          if [ -d "$IL2CPP_DIR" ]; then
-            echo "Tìm thấy IL2CPP tại: $IL2CPP_DIR"
+
+          echo "Bung file .pkg bằng xar..."
+          mkdir -p /tmp/pkg_extract
+          cd /tmp/pkg_extract
+          xar -xf /tmp/unity-ios.pkg
+
+          echo "Giải nén Payload..."
+          PAYLOAD_FILE=$(find . -name "Payload" | head -n 1)
+          mkdir -p extracted_files
+          cd extracted_files
+          cat "../$PAYLOAD_FILE" | cpio -idmv > /dev/null 2>&1
+
+          echo "Tìm thư mục il2cpp của macOS..."
+          IL2CPP_MAC=$(find . -type d -path "*/PlaybackEngines/iOSSupport/il2cpp" | head -n 1)
+
+          # Quay lại thư mục dự án
+          cd "$GITHUB_WORKSPACE"
+
+          if [ -n "$IL2CPP_MAC" ]; then
+            echo "Đã tìm thấy IL2CPP macOS, tiến hành ghi đè vào dự án..."
             mkdir -p Il2CppOutputProject/IL2CPP/build/deploy_arm64
-            cp -rf "$IL2CPP_DIR"/build/deploy_arm64/* Il2CppOutputProject/IL2CPP/build/deploy_arm64/ 2>/dev/null || true
-            cp -rf "$IL2CPP_DIR"/* Il2CppOutputProject/IL2CPP/ 2>/dev/null || true
-          else
-            echo "Không tìm thấy thư mục qua installer, thử giải nén trực tiếp..."
-            pkgutil --expand-full /tmp/unity-ios.pkg /tmp/expanded
-            IL2CPP_BACKUP=$(find /tmp/expanded -type d -name "il2cpp" | head -n 1)
-            if [ -d "$IL2CPP_BACKUP" ]; then
-              mkdir -p Il2CppOutputProject/IL2CPP/build/deploy_arm64
-              cp -rf "$IL2CPP_BACKUP"/build/deploy_arm64/* Il2CppOutputProject/IL2CPP/build/deploy_arm64/ 2>/dev/null || true
-              cp -rf "$IL2CPP_BACKUP"/* Il2CppOutputProject/IL2CPP/ 2>/dev/null || true
-            fi
+            cp -rf /tmp/pkg_extract/extracted_files/"$IL2CPP_MAC"/build/deploy_arm64/* Il2CppOutputProject/IL2CPP/build/deploy_arm64/ 2>/dev/null || true
+            cp -rf /tmp/pkg_extract/extracted_files/"$IL2CPP_MAC"/* Il2CppOutputProject/IL2CPP/ 2>/dev/null || true
           fi
-          
-          echo "Cấp quyền thực thi..."
+
+          echo "Cấp quyền thực thi cho toàn bộ binary và script..."
           find Il2CppOutputProject/IL2CPP -type f -exec chmod +x {} + 2>/dev/null || true
           find . -name "*.sh" -exec chmod +x {} + 2>/dev/null || true
 
@@ -71,7 +73,7 @@ jobs:
           if [ -z "$APP_PATH" ]; then
             APP_PATH=$(find build -name "*.app" -type d 2>/dev/null | head -n 1)
           fi
-          
+
           echo "App path found: $APP_PATH"
           cp -r "$APP_PATH" Payload/
           zip -r Unity-iPhone.ipa Payload
