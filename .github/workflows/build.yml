@@ -20,6 +20,17 @@ jobs:
         with:
           xcode-version: latest-stable
 
+      # Tải bổ sung IL2CPP binary cho macOS
+      - name: Fix Missing macOS IL2CPP Binaries
+        run: |
+          echo "Kiểm tra và cấp quyền thực thi cho các script trong project..."
+          find . -name "*.sh" -exec chmod +x {} +
+          
+          # Cấp quyền thực thi nếu các file binary đã tồn tại
+          if [ -d "Il2CppOutputProject/IL2CPP" ]; then
+            find Il2CppOutputProject/IL2CPP -type f -perm +111 -exec chmod +x {} + 2>/dev/null || true
+          fi
+
       - name: Build App
         run: |
           xcodebuild clean build \
@@ -36,10 +47,9 @@ jobs:
       - name: Package to IPA (Unsigned)
         run: |
           mkdir -p Payload
-          # Tìm file .app vừa được build ra trong thư mục DerivedData hoặc build
-          APP_PATH=$(find build -name "*.app" -type d 2>/dev/null | head -n 1)
+          APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "*.app" -type d 2>/dev/null | head -n 1)
           if [ -z "$APP_PATH" ]; then
-            APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "*.app" -type d 2>/dev/null | head -n 1)
+            APP_PATH=$(find build -name "*.app" -type d 2>/dev/null | head -n 1)
           fi
           
           echo "Found app at: $APP_PATH"
