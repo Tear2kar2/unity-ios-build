@@ -25,7 +25,7 @@ jobs:
           echo "Tải bộ Unity iOS Support..."
           curl -L -f "https://download.unity3d.com/download_unity/96770f904ca7/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.62f3.pkg" -o /tmp/unity-ios.pkg
 
-          echo "Bung file .pkg bằng xar..."
+          echo "Bung file .pkg..."
           mkdir -p /tmp/pkg_extract
           cd /tmp/pkg_extract
           xar -xf /tmp/unity-ios.pkg
@@ -36,35 +36,32 @@ jobs:
           cd extracted_files
           cat "../$PAYLOAD_FILE" | cpio -idmv > /dev/null 2>&1
 
-          echo "Tìm thư mục il2cpp của macOS..."
           IL2CPP_MAC=$(find . -type d -path "*/PlaybackEngines/iOSSupport/il2cpp" | head -n 1)
-
-          # Quay lại thư mục dự án
           cd "$GITHUB_WORKSPACE"
 
           if [ -n "$IL2CPP_MAC" ]; then
-            echo "Đã tìm thấy IL2CPP macOS, tiến hành ghi đè vào dự án..."
             mkdir -p Il2CppOutputProject/IL2CPP/build/deploy_arm64
             cp -rf /tmp/pkg_extract/extracted_files/"$IL2CPP_MAC"/build/deploy_arm64/* Il2CppOutputProject/IL2CPP/build/deploy_arm64/ 2>/dev/null || true
             cp -rf /tmp/pkg_extract/extracted_files/"$IL2CPP_MAC"/* Il2CppOutputProject/IL2CPP/ 2>/dev/null || true
           fi
 
-          echo "Cấp quyền thực thi cho toàn bộ binary và script..."
           find Il2CppOutputProject/IL2CPP -type f -exec chmod +x {} + 2>/dev/null || true
           find . -name "*.sh" -exec chmod +x {} + 2>/dev/null || true
 
       - name: Build App
         run: |
-          xcodebuild clean build \
+          xcodebuild build \
             -project Unity-iPhone.xcodeproj \
             -scheme Unity-iPhone \
             -configuration Release \
             -sdk iphoneos \
             -destination "generic/platform=iOS" \
+            -jobs 4 \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
-            PROVISIONING_PROFILE_SPECIFIER=""
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            COMPILER_INDEX_STORE_ENABLE=NO
 
       - name: Package to IPA (Unsigned)
         run: |
@@ -74,7 +71,7 @@ jobs:
             APP_PATH=$(find build -name "*.app" -type d 2>/dev/null | head -n 1)
           fi
 
-          echo "App path found: $APP_PATH"
+          echo "Tìm thấy: $APP_PATH"
           cp -r "$APP_PATH" Payload/
           zip -r Unity-iPhone.ipa Payload
 
