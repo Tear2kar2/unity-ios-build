@@ -1,77 +1,80 @@
-name: Build iOS IPA
+# Thay toàn bộ nội dung file workflow hiện tại (.github/workflows/...) bằng file này.
+# Repo root = thư mục chứa Unity-iPhone.xcodeproj (đúng như repo của bạn).
+name: Build IPA
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ "main" ]
 
 jobs:
   build:
-    runs-on: macos-14
-
+    runs-on: macos-15
+    timeout-minutes: 120
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      - name: Setup Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
-
-      - name: Bypass Windows IL2CPP Missing Binaries
+      # Ghép lại libiPhone-lib.a nếu đã chia nhỏ (không ảnh hưởng nếu không chia)
+      - name: Ghép lại thư viện bị chia nhỏ
+        working-directory: Libraries
         run: |
-          echo "Tạo mock dummy binary cho IL2CPP và bee_backend để Xcode vượt qua script kiểm tra..."
-          # Tạo đúng cấu trúc thư mục mà Xcode đang tìm kiếm
-          mkdir -p Il2CppOutputProject/IL2CPP/build/deploy_arm64/bee_backend/mac-arm64
+          if ls libiPhone-lib.a.part_* >/dev/null 2>&1; then
+            cat libiPhone-lib.a.part_* > libiPhone-lib.a
+            rm libiPhone-lib.a.part_*
+          fi
+          ls -lh
 
-          # Tạo file giả lập (dummy executable) báo hoàn thành thành công (exit 0)
-          cat << 'EOF' > Il2CppOutputProject/IL2CPP/build/deploy_arm64/il2cpp
-          #!/bin/sh
-          echo "IL2CPP already compiled on Windows, skipping."
-          exit 0
-          EOF
-
-          cat << 'EOF' > Il2CppOutputProject/IL2CPP/build/deploy_arm64/bee_backend/mac-arm64/bee_backend
-          #!/bin/sh
-          echo "Bee backend skipped."
-          exit 0
-          EOF
-
-          # Cấp toàn bộ quyền thực thi
-          chmod +x Il2CppOutputProject/IL2CPP/build/deploy_arm64/il2cpp
-          chmod +x Il2CppOutputProject/IL2CPP/build/deploy_arm64/bee_backend/mac-arm64/bee_backend
-          find . -name "*.sh" -exec chmod +x {} + 2>/dev/null || true
-
-      - name: Build App
+      # KHÔNG bypass IL2CPP nữa: project đã có sẵn file il2cpp cho Mac.
+      # Bước này chỉ kiểm tra file có thực sự lên GitHub hay chưa.
+      - name: Kiểm tra file IL2CPP
         run: |
-          xcodebuild build \
+          ARCH=$(uname -m); echo "Runner arch: $ARCH"
+          DIR="Il2CppOutputProject/IL2CPP/build/deploy_$ARCH"
+          for f in "$DIR/il2cpp" "$DIR/libcoreclr.dylib" "$DIR/libhostfxr.dylib"; do
+            [ -f "$f" ] || { echo "::error::THIEU FILE: $f (kiem tra .gitignore co chan build/, *.dylib, *.dll khong)"; exit 1; }
+          done
+          N=$(find Il2CppOutputProject/Source/il2cppOutput -type f \( -name '*.cpp' -o -name '*.c' \) 2>/dev/null | wc -l)
+          echo "So file C++ IL2CPP: $N"
+          [ "$N" -gt 50 ] || { echo "::error::Thieu ma nguon Il2CppOutputProject/Source/il2cppOutput"; exit 1; }
+          SZ=$(stat -f%z Libraries/libiPhone-lib.a)
+          [ "$SZ" -gt 150000000 ] || { echo "::error::libiPhone-lib.a sai kich thuoc ($SZ)"; exit 1; }
+          chmod +x "$DIR/il2cpp" "$DIR"/bee_backend/*/bee_backend
+
+      - name: Build App (có biên dịch IL2CPP, sẽ mất 15-40 phút)
+        run: |
+          set -o pipefail
+          xcodebuild \
             -project Unity-iPhone.xcodeproj \
             -scheme Unity-iPhone \
             -configuration Release \
             -sdk iphoneos \
-            -destination "generic/platform=iOS" \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
-            PROVISIONING_PROFILE_SPECIFIER="" \
-            COMPILER_INDEX_STORE_ENABLE=NO
+            build 2>&1 | tee build.log | tail -n 150
 
       - name: Package to IPA (Unsigned)
         run: |
+          APP=$(find build/Build/Products -maxdepth 2 -name "*.app" | head -1)
+          echo "App: $APP"
           mkdir -p Payload
-          APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "*.app" -type d 2>/dev/null | head -n 1)
-          if [ -z "$APP_PATH" ]; then
-            APP_PATH=$(find build -name "*.app" -type d 2>/dev/null | head -n 1)
-          fi
-
-          echo "Tìm thấy App tại: $APP_PATH"
-          cp -r "$APP_PATH" Payload/
-          zip -r Unity-iPhone.ipa Payload
+          cp -R "$APP" Payload/
+          zip -qry NROQUEEN.ipa Payload
+          ls -lh NROQUEEN.ipa
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Unity-iPhone-IPA
-          path: Unity-iPhone.ipa
+          name: NROQUEEN-ipa
+          path: NROQUEEN.ipa
+
+      - name: Upload build log (khi lỗi)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
