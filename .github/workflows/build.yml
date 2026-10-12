@@ -20,26 +20,34 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Install Unity iOS Playback Engine (macOS)
+      - name: Install Unity iOS Support (macOS binaries)
         run: |
-          echo "Tải bộ Unity iOS Support cho macOS..."
-          # Tải package iOS PlaybackEngine chính thức từ server Unity (phiên bản 2022.3.62f3)
-          curl -sSL "https://download.unity3d.com/download_unity/cb082e6ef26e/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.62f3.pkg" -o /tmp/unity-ios.pkg
+          echo "Tải bộ Unity iOS Support chuẩn cho Unity 2022.3.62f3..."
+          curl -L -f "https://download.unity3d.com/download_unity/96770f904ca7/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-2022.3.62f3.pkg" -o /tmp/unity-ios.pkg
           
-          # Bung package ra thư mục tạm
-          pkgutil --expand-full /tmp/unity-ios.pkg /tmp/unity-ios-expanded
+          echo "Cài đặt pkg vào máy ảo..."
+          sudo installer -pkg /tmp/unity-ios.pkg -target /
           
-          # Tìm đúng thư mục IL2CPP cho macOS
-          IL2CPP_DIR=$(find /tmp/unity-ios-expanded -type d -path "*/PlaybackEngines/iOSSupport/il2cpp" | head -n 1)
+          echo "Tìm thư mục IL2CPP vừa cài đặt..."
+          IL2CPP_DIR=$(find /Applications /opt /Library -type d -path "*/iOSSupport/il2cpp" 2>/dev/null | head -n 1)
           
           if [ -d "$IL2CPP_DIR" ]; then
-            echo "Đã tìm thấy IL2CPP macOS: $IL2CPP_DIR"
+            echo "Tìm thấy IL2CPP tại: $IL2CPP_DIR"
             mkdir -p Il2CppOutputProject/IL2CPP/build/deploy_arm64
             cp -rf "$IL2CPP_DIR"/build/deploy_arm64/* Il2CppOutputProject/IL2CPP/build/deploy_arm64/ 2>/dev/null || true
             cp -rf "$IL2CPP_DIR"/* Il2CppOutputProject/IL2CPP/ 2>/dev/null || true
+          else
+            echo "Không tìm thấy thư mục qua installer, thử giải nén trực tiếp..."
+            pkgutil --expand-full /tmp/unity-ios.pkg /tmp/expanded
+            IL2CPP_BACKUP=$(find /tmp/expanded -type d -name "il2cpp" | head -n 1)
+            if [ -d "$IL2CPP_BACKUP" ]; then
+              mkdir -p Il2CppOutputProject/IL2CPP/build/deploy_arm64
+              cp -rf "$IL2CPP_BACKUP"/build/deploy_arm64/* Il2CppOutputProject/IL2CPP/build/deploy_arm64/ 2>/dev/null || true
+              cp -rf "$IL2CPP_BACKUP"/* Il2CppOutputProject/IL2CPP/ 2>/dev/null || true
+            fi
           fi
           
-          # Cấp toàn bộ quyền thực thi cho các file nhị phân IL2CPP
+          echo "Cấp quyền thực thi..."
           find Il2CppOutputProject/IL2CPP -type f -exec chmod +x {} + 2>/dev/null || true
           find . -name "*.sh" -exec chmod +x {} + 2>/dev/null || true
 
